@@ -1,0 +1,11 @@
+#gameScreen {
+    border: .2em solid black;
+}
+
+#img_ball {
+    display: none;
+}
+
+#img_brick{
+    display: none;
+}
