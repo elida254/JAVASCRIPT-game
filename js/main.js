@@ -1,71 +1,35 @@
-const GAMESTATE = { PAUSED : 0, RUNNING: 1, MENU: 2, GAMEOVER: 3, NEWLEVEL: 4}
+var _Game = require("./game");
+
+let canvas = document.getElementById("gameScreen");
+let ctx = canvas.getContext("2d"); // 2d means 2 dimension
+ctx.fillStyle = "#f00";
+
+ctx.clearRect(0, 0, 800, 600);
+
+// ctx.fillRect(20, 20, 100, 100);
+
+// ctx.fillStyle = "#00f";
+
+// ctx.fillRect(370, 260, 50, 50);
+const GAME_WIDTH = 800;
+
+const GAME_HEIGHT = 680;
+let game = new _Game(GAME_WIDTH, GAME_HEIGHT)
+let _paddle = new _Paddle(game);
+_paddle.draw(ctx);
+let lasttime = 0;
+
+function gameloop(timestamp) {
+    let deltaTime = timestamp - lasttime;
+    lasttime = timestamp;
+    ctx.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
 
 
-const level1 = [
-    [ 0, 1, 1, 0, 0, 0, 0, 1, 1, 0 ],
+    game.update(deltaTime);
 
-    [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],
+    game.draw(ctx);
 
-    [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],
-
-    [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ]
-];
-
-const level2 = [
-    [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],
-
-    [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],
-
-    [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ]
-];
-
-function detectcollision(ball, gameObject)
-{
-    let bottomOfBall = ball.position.y + ball.size;
-
-    let topOfBall = ball.position.y;
-
-
-
-    let topOfObject = gameObject.position.y;
-
-    let leftSideOfObject = gameObject.position.x;
-
-    let rightSideOfObject = gameObject.position.x + gameObject.width;
-
-    let bottomOfObject = gameObject.position.y + gameObject.height;
-    if(bottomOfBall >= topOfObject && topOfBall <= bottomOfObject && ball.position.x >= leftSideOfObject && ball.position.x + ball.size <= rightSideOfObject)
-    {
-       return true;
-    } else {
-        return false;
-    }
+    requestAnimationFrame(gameloop);
 }
 
-function buildlevel(game, level)
-{
-    let bricks = [];
-
-    level.forEach((row, rowIndex) => {
-        row.forEach((brick, brickIndex) => 
-        {
-            if(brick === 1)
-            {
-                let position = { x: 80 * brickIndex, y: 75 + 24 * rowIndex}
-
-                bricks.push(new Brick(game, position));
-            }
-        })
-    });
-
-    return bricks;
-}
-
-
-
-
-// game.start();
-
-
-
- 
+requestAnimationFrame(gameloop);
