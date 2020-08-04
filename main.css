@@ -1,5 +1,15 @@
+body {
+    background-color: #155804bd;
+}
+
+canvas {
+    background-color: #e8fffcd7;
+}
+
 #gameScreen {
-    border: .2em solid black;
+    border: .2em solid #0c0505;
+    border-radius: .1em;
+    box-shadow: 12px 12px 7px #092e00;
 }
 
 #img_ball {
@@ -8,4 +18,54 @@
 
 #img_brick {
     display: none;
+}
+
+section {
+    float: right;
+    padding: 40px 120px;
+}
+
+.h1,
+h1 {
+    font-family: cursive;
+    font-size: 30px;
+    color: blue;
+    text-shadow: 2px 3px 2px #240111;
+    text-transform: uppercase;
+}
+
+.h2,
+p {
+    font-family: cursive;
+    font-size: 50px;
+    color: #ffc4eb;
+    text-shadow: 3px 3px 4px #ff0077;
+    margin: 0 auto;
+    text-transform: uppercase;
+}
+
+.p {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 20px;
+    color: blue;
+    text-shadow: 3px 3px 4px #11040a;
+    text-transform: lowercase;
+    margin: 0 auto;
+}
+button {
+    border: 2px solid greenyellow;
+    background-color: transparent;
+    padding: 15px 50px;
+    margin-top: 12px;
+    border-radius: 12px;
+    font-size: 26px;
+    color: #240111;
+    cursor: pointer;
+}
+button:hover {
+    border: 2px solid white;
+    font-size: 28px;
+    transition: ease-in;
+    background: #ff0077;
+    box-shadow: inset 2px 3px 5px #240111,inset -2px -3px 5px #240111, 2px 7px 13px #041100;
 }

@@ -25,7 +25,6 @@ class Game {
 
         this.gameheight = gameheight;
 
-        this.game = game;
 
         this.gamestate = GAMESTATE.MENU;
 
@@ -81,7 +80,7 @@ class Game {
 
         [...this.gameObjects, ...this.bricks].forEach((object) => object.update(deltaTime));
 
-        this.bricks = this.bricks.filter(Brick => !brick.markedForDeletion)
+        this.bricks = this.bricks.filter(brick => !brick.markedForDeletion)
 
     }
 

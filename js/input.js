@@ -25,7 +25,7 @@ class InputHandler {
 
                 case 32:
 
-                    game.state();
+                    game.start();
 
                     break;
                 default:
