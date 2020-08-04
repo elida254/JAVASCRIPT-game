@@ -1,6 +1,4 @@
-var _Paddle = require("./paddle.js");
-var _InputHandler = require("./input");
-var _Ball = require("./ball");
+var _Game = require("./game");
 
 let canvas = document.getElementById("gameScreen");
 let ctx = canvas.getContext("2d"); // 2d means 2 dimension
@@ -16,10 +14,7 @@ ctx.clearRect(0, 0, 800, 600);
 const GAME_WIDTH = 800;
 
 const GAME_HEIGHT = 680;
-let game = {
-    gamewidth: GAME_WIDTH,
-    gameheight: GAME_HEIGHT
-}
+let game = new _Game(GAME_WIDTH, GAME_HEIGHT)
 let _paddle = new _Paddle(game);
 _paddle.draw(ctx);
 let lasttime = 0;
