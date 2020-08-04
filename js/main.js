@@ -1,8 +1,6 @@
 let game;
 
-const GAME_WIDTH = 800;
 
-const GAME_HEIGHT =600;
 
 const GAMESTATE = { PAUSED : 0, RUNNING: 1, MENU: 2, GAMEOVER: 3, NEWLEVEL: 4}
 
@@ -25,111 +23,7 @@ const level2 = [
     [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ]
 ];
 
-class Paddle {
-    constructor (game){
-        this.gamewidth = game.gamewidth;
-        this.width = 150;
-        this.height = 20;
 
-        this.maxspeed = 10;
-        this.speed =0;
-
-        this.position = {
-            x : game.gamewidth / 2 - this.width / 2,
-            y : game.gameheight - this.height - 10
-        }
-    }
-
-    moveleft()
-    {
-        this.speed = -this.maxspeed;
-    }
-
-    moveright()
-    {
-        this.speed = this.maxspeed;
-    }
-
-    stop()
-    {
-        this.speed = 0;
-    }
-
-    draw(ctx) {
-        ctx.fillStyle = "#000";
-        ctx.fillRect(this.position.x, this.position.y, this.width ,this.height)
-    }
-
-    update(deltaTime)
-    {
-        // if (!deltaTime)  return;
-
-        // this.position.x += 5 / deltaTime;
-        this.position.x += this.speed;
-
-        if (this.position.x < 0) this.position.x = 0;
-        if(this.position.x + this.width > this.gamewidth)
-        this.position.x = this.gamewidth - this.width;
-    }
-};
-class Ball {
-    constructor(game)
-    {
-        this.image =  document.getElementById("img_ball");
-
-        this.gamewidth = game.gamewidth;
-
-        this.gameheight = game.gameheight;
-
-        this.size = 16;
-
-        this.reset();
-    }
-
-    reset()
-    {
-        this.speed = { x: 2, y : -2};
-
-        this.position = { x: 10, y: 200 };
-    }
-    draw(ctx)
-        {
-    ctx.drawImage(this.image, this.position.x , this.position.y ,this.size ,this.size);
-
-        }
-
-        update(deltatime)
-        {
-            this.position.x += this.speed.x;
-
-            this.position.y += this.speed.y;
-
-            if(this.position.x + this.size > this.gamewidth || this.position.x < 0)
-            {
-                this.speed.x = -this.speed.x;
-            }
-
-            if(//this.position.y + this.size > this.gameheight || 
-                this.position.y < 0)
-            {
-                this.speed.y = -this.speed.y;
-            }
-
-            if(this.position.y + this.size > this.gameheight)
-            {
-                this.game.lives--;
-
-                this.reset();
-            }
-
-            if(detectcollision(this, this.game.paddle))
-            {
-                this.speed.y = -this.speed.y;
-
-                this.position.y = this.game.paddle.position.y - this.size;
-            }
-        }
-}
 
 class Game {
 
@@ -273,60 +167,6 @@ class Game {
 };
 
 game  = new Game(GAME_WIDTH , GAME_HEIGHT);
-class InputHandler {
-    constructor(paddle , game)
-    {
-        document.addEventListener("keydown", event => 
-        {
-            // alert(event.keyCode);
-            switch (event.keyCode) {
-                case 37:
-                    // alert("move left")
-                    paddle.moveleft();
-
-                    break;
-
-                    case 39:
-                    // alert("move right")
-                    paddle.moveright();
-
-                    break;
-                
-                case 27: 
-                    
-                    game.togglepause();
-
-                    break;
-
-                case 32:
-                
-                    game.state();
-
-                    break;
-                default:
-                    break;
-            }
-        });
-        document.addEventListener("keyup", event => 
-        {
-            // alert(event.keyCode);
-            switch (event.keyCode) {
-                case 37:
-                    // alert("move left")
-                  if(Paddle.speed < 0)  paddle.stop();
-                    break;
-                    case 39:
-                    // alert("move right")
-                   if(Paddle.speed > 0) paddle.stop();
-                    break;
-            
-                default:
-                    break;
-            }
-        });
-    }
-}
-
 
 
 function detectcollision(ball, gameObject)
@@ -404,35 +244,11 @@ function buildlevel(game, level)
     return bricks;
 }
 
-let canvas = document.getElementById("gameScreen");
-let ctx = canvas.getContext("2d");// 2d means 2 dimension
 
-ctx.clearRect(0,0,800,600);
-// ctx.fillStyle = "#f00";
-// ctx.fillRect(20,20,100,100);
 
-// ctx.fillStyle = "#00f";
-// ctx.fillRect(200,200,50,50);
 
 // game.start();
 
-// paddle.draw(ctx);
 
-let lasttime = 0;
 
  
-function gameloop(timestamp)
-{
-    let deltaTime = timestamp - lasttime;
-    lasttime = timestamp;
-    ctx.clearRect(0,0,GAME_WIDTH,GAME_HEIGHT);
-
-
-   game.update(deltaTime);
-
-   game.draw(ctx);
-
-    requestAnimationFrame(gameloop);
-}
-
-requestAnimationFrame(gameloop);
