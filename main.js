@@ -123,7 +123,7 @@ module.exports = detectcollision
 var Paddle = require("./paddle.js");
 var InputHandler = require("./input");
 var Ball = require("./ball");
-var Brick = require("./brick");
+var brick = require("./brick");
 var AllLevels = require('./levels');
 
 
@@ -147,8 +147,7 @@ class Game {
 
         this.gameheight = gameheight;
 
-
-        this.gamestate = GAMESTATE.MENU;
+        this.gamestate = GAMESTATE.MENU; //2
 
         this.paddle = new Paddle(this);
 
@@ -179,7 +178,7 @@ class Game {
         // }
         this.ball.reset();
 
-        this.gameObjects = [this.ball, this.paddle, /* ...bricks */ ];
+        this.gameObjects = [this.ball, this.paddle /* ...bricks */ ];
 
         this.gamestate = GAMESTATE.RUNNING;
 
@@ -375,7 +374,7 @@ var _Game = require("./game");
 
 let canvas = document.getElementById("gameScreen");
 let ctx = canvas.getContext("2d"); // 2d means 2 dimension
-ctx.fillStyle = "#f00";
+// ctx.fillStyle = "#f00";
 
 // ctx.clearRect(0, 0, 900, 600);
 
@@ -387,6 +386,7 @@ ctx.fillStyle = "#f00";
 const GAME_WIDTH = 900;
 
 const GAME_HEIGHT = 600;
+
 let game = new _Game(GAME_WIDTH, GAME_HEIGHT)
 // let _paddle = new _Paddle(game);
 // _paddle.draw(ctx);
