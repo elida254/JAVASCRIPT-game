@@ -175,7 +175,7 @@ class Game {
 
         this.gameObjects = [this.ball, this.paddle];
 
-        this.gamestate = GAMESTATE.RUNNING;
+        // this.gamestate = GAMESTATE.RUNNING;
 
     }
 
@@ -198,7 +198,8 @@ class Game {
     }
 
     draw(ctx) {
-
+        
+        console.log(this.gamestate);
         [...this.gameObjects, ...this.bricks].forEach((object) => object.update(ctx));
 
         if (this.gamestate === GAMESTATE.PAUSED) {
@@ -376,17 +377,19 @@ let game = new Game(GAME_WIDTH, GAME_HEIGHT)
 
 game.start()
 
-let lasttime = 0;
+let lastTime = 0;
 
 function gameloop(timestamp) {
-    let deltaTime = timestamp - lasttime;
-    lasttime = timestamp;
-    ctx.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
+    let deltaTime = timestamp - lastTime;
 
+    lastTime = timestamp;
+
+    ctx.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
 
     game.update(deltaTime);
 
     game.draw(ctx);
+
     requestAnimationFrame(gameloop);
 }
 

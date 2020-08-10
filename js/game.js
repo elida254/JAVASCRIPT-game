@@ -49,12 +49,12 @@ class Game {
         if (this.gamestate !== GAMESTATE.MENU && this.gamestate !== GAMESTATE.NEWLEVEL) return;
 
         this.bricks = buildlevel(this, this.levels[this.currentLevel]);
+        
         this.ball.reset();
 
         this.gameObjects = [this.ball, this.paddle];
 
         this.gamestate = GAMESTATE.RUNNING;
-
     }
 
     update(deltaTime) {
@@ -76,7 +76,8 @@ class Game {
     }
 
     draw(ctx) {
-
+        
+        console.log(this.gamestate);
         [...this.gameObjects, ...this.bricks].forEach((object) => object.update(ctx));
 
         if (this.gamestate === GAMESTATE.PAUSED) {
