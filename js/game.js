@@ -4,7 +4,6 @@ var Ball = require("./ball");
 var brick = require("./brick");
 var AllLevels = require('./levels');
 
-
 var buildlevel = AllLevels.buildlevel;
 var level1 = AllLevels.level1;
 var level2 = AllLevels.level2;
@@ -16,7 +15,6 @@ const GAMESTATE = {
     GAMEOVER: 3,
     NEWLEVEL: 4
 }
-
 
 class Game {
 
