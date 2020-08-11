@@ -1,5 +1,3 @@
-// "use strict";
-// exports.__esModule = true;
 class InputHandler {
     constructor(paddle, game) {
         document.addEventListener("keydown", event => {

@@ -13,6 +13,7 @@ let game = new Game(GAME_WIDTH, GAME_HEIGHT)
 
 game.start()
 
+
 let lastTime = 0;
 
 function gameloop(timestamp) {
@@ -22,9 +23,10 @@ function gameloop(timestamp) {
 
     ctx.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
 
+    game.draw(ctx);
+
     game.update(deltaTime);
 
-    game.draw(ctx);
 
     requestAnimationFrame(gameloop);
 }

@@ -76,8 +76,10 @@ class Game {
     }
 
     draw(ctx) {
-        
-        console.log(this.gamestate);
+        // console.log(ctx);
+        this.paddle.draw(ctx);
+        this.ball.draw(ctx);
+
         [...this.gameObjects, ...this.bricks].forEach((object) => object.update(ctx));
 
         if (this.gamestate === GAMESTATE.PAUSED) {
@@ -103,7 +105,7 @@ class Game {
 
             ctx.fill();
 
-            ctx.font = "30px fantasy";
+            ctx.font = "40px fantasy";
 
             ctx.fillStyle = "white";
 

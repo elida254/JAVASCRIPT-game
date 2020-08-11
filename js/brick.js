@@ -7,17 +7,17 @@ class Brick {
 
         this.game = game;
 
-        this.position = {
-            x: 10,
-            y: 10
-        };
+        this.position = position
+        // {
+        //     x: 10,
+        //     y: 10
+        // };
 
         this.width = 80;
 
         this.height = 24;
 
         this.markedForDeletion = false;
-
     }
 
     update() {

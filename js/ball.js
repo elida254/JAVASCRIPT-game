@@ -7,10 +7,10 @@ class Ball {
         this.gamewidth = game.gamewidth;
 
         this.gameheight = game.gameheight;
-        
+
         this.game = game;
 
-        this.size = 16;
+        this.size = 20;
 
         this.reset();
     }
