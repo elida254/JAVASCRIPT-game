@@ -1,8 +1,8 @@
 var Paddle = require("./paddle.js");
 var InputHandler = require("./input");
 var Ball = require("./ball");
-var brick = require("./brick");
 var AllLevels = require('./levels');
+const Brick = require("./brick");
 
 var buildlevel = AllLevels.buildlevel;
 var level1 = AllLevels.level1;
@@ -28,6 +28,7 @@ class Game {
         this.paddle = new Paddle(this);
 
         this.ball = new Ball(this);
+        this.brick = new Brick()
 
         this.gameObjects = [];
 
@@ -79,7 +80,8 @@ class Game {
         // console.log(ctx);
         this.paddle.draw(ctx);
         this.ball.draw(ctx);
-
+        // this.brick.draw(ctx);        
+        buildlevel(this, this.levels[0]);
         [...this.gameObjects, ...this.bricks].forEach((object) => object.update(ctx));
 
         if (this.gamestate === GAMESTATE.PAUSED) {

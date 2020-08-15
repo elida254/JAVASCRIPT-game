@@ -20,7 +20,6 @@ const level2 = [
 
 function buildlevel(game, level) {
     let bricks = [];
-    console.log('in the level function');
     level.forEach((row, rowIndex) => {
         row.forEach((brick, brickIndex) => {
             if (brick === 1) {

@@ -91,7 +91,7 @@ class Brick {
         }
     }
 
-    draw() {
+    draw(ctx) {
         ctx.drawImage(this.image, this.position.x, this.position.y, this.width, this.height);
     }
 }
@@ -124,8 +124,8 @@ module.exports = detectcollision
 var Paddle = require("./paddle.js");
 var InputHandler = require("./input");
 var Ball = require("./ball");
-var brick = require("./brick");
 var AllLevels = require('./levels');
+const Brick = require("./brick");
 
 var buildlevel = AllLevels.buildlevel;
 var level1 = AllLevels.level1;
@@ -151,6 +151,7 @@ class Game {
         this.paddle = new Paddle(this);
 
         this.ball = new Ball(this);
+        this.brick = new Brick()
 
         this.gameObjects = [];
 
@@ -202,7 +203,8 @@ class Game {
         // console.log(ctx);
         this.paddle.draw(ctx);
         this.ball.draw(ctx);
-
+        this.brick.draw(ctx);
+        buildlevel(this, this.levels[0]);
         [...this.gameObjects, ...this.bricks].forEach((object) => object.update(ctx));
 
         if (this.gamestate === GAMESTATE.PAUSED) {
@@ -266,6 +268,8 @@ class Game {
 
 module.exports = Game
 },{"./ball":1,"./brick":2,"./input":5,"./levels":6,"./paddle.js":8}],5:[function(require,module,exports){
+
+
 class InputHandler {
     constructor(paddle, game) {
         document.addEventListener("keydown", event => {
@@ -303,11 +307,11 @@ class InputHandler {
             switch (event.keyCode) {
                 case 37:
                     // alert("move left")
-                    if (Paddle.speed < 0) paddle.stop();
+                    if (paddle.speed < 0) paddle.stop();
                     break;
                 case 39:
                     // alert("move right")
-                    if (Paddle.speed > 0) paddle.stop();
+                    if (paddle.speed > 0) paddle.stop();
                     break;
 
                 default:
@@ -340,7 +344,6 @@ const level2 = [
 
 function buildlevel(game, level) {
     let bricks = [];
-    console.log('in the level function');
     level.forEach((row, rowIndex) => {
         row.forEach((brick, brickIndex) => {
             if (brick === 1) {

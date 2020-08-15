@@ -1,3 +1,5 @@
+
+
 class InputHandler {
     constructor(paddle, game) {
         document.addEventListener("keydown", event => {
@@ -35,11 +37,11 @@ class InputHandler {
             switch (event.keyCode) {
                 case 37:
                     // alert("move left")
-                    if (Paddle.speed < 0) paddle.stop();
+                    if (paddle.speed < 0) paddle.stop();
                     break;
                 case 39:
                     // alert("move right")
-                    if (Paddle.speed > 0) paddle.stop();
+                    if (paddle.speed > 0) paddle.stop();
                     break;
 
                 default:
