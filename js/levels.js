@@ -18,7 +18,7 @@ const level2 = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 ];
 
-function buildlevel(game, level) {
+function buildlevel(game, level, ctx) {
     let bricks = [];
     level.forEach((row, rowIndex) => {
         row.forEach((brick, brickIndex) => {
@@ -27,7 +27,7 @@ function buildlevel(game, level) {
                     x: 80 * brickIndex,
                     y: 75 + 24 * rowIndex
                 }
-                bricks.push(new Brick(game, position));
+                bricks.push(new Brick(game, position).draw(ctx));
             }
         })
     });

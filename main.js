@@ -92,6 +92,7 @@ class Brick {
     }
 
     draw(ctx) {
+        
         ctx.drawImage(this.image, this.position.x, this.position.y, this.width, this.height);
     }
 }
@@ -151,13 +152,13 @@ class Game {
         this.paddle = new Paddle(this);
 
         this.ball = new Ball(this);
-        this.brick = new Brick()
 
         this.gameObjects = [];
 
         this.bricks = [];
 
         this.lives = 3;
+        this.ctx = null;
 
         this.levels = [level1, level2];
 
@@ -167,12 +168,12 @@ class Game {
 
     }
 
-    start() {
+    start(ctx) {
         // let brick = new Brick(this, { x: 20, y: 20});
 
         if (this.gamestate !== GAMESTATE.MENU && this.gamestate !== GAMESTATE.NEWLEVEL) return;
 
-        this.bricks = buildlevel(this, this.levels[this.currentLevel]);
+        this.bricks = buildlevel(this, this.levels[this.currentLevel],ctx);
         
         this.ball.reset();
 
@@ -203,8 +204,8 @@ class Game {
         // console.log(ctx);
         this.paddle.draw(ctx);
         this.ball.draw(ctx);
-        this.brick.draw(ctx);
-        buildlevel(this, this.levels[0]);
+        // this.brick.draw(ctx);        
+        console.log(buildlevel(this, this.levels[0],ctx));
         [...this.gameObjects, ...this.bricks].forEach((object) => object.update(ctx));
 
         if (this.gamestate === GAMESTATE.PAUSED) {
@@ -342,7 +343,7 @@ const level2 = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 ];
 
-function buildlevel(game, level) {
+function buildlevel(game, level, ctx) {
     let bricks = [];
     level.forEach((row, rowIndex) => {
         row.forEach((brick, brickIndex) => {
@@ -351,7 +352,7 @@ function buildlevel(game, level) {
                     x: 80 * brickIndex,
                     y: 75 + 24 * rowIndex
                 }
-                bricks.push(new Brick(game, position));
+                bricks.push(new Brick(game, position).draw(ctx));
             }
         })
     });
@@ -377,7 +378,7 @@ const GAME_HEIGHT = 600;
 let game = new Game(GAME_WIDTH, GAME_HEIGHT)
 
 
-game.start()
+game.start(ctx)
 
 
 let lastTime = 0;

@@ -28,13 +28,13 @@ class Game {
         this.paddle = new Paddle(this);
 
         this.ball = new Ball(this);
-        this.brick = new Brick()
 
         this.gameObjects = [];
 
         this.bricks = [];
 
         this.lives = 3;
+        this.ctx = null;
 
         this.levels = [level1, level2];
 
@@ -44,12 +44,12 @@ class Game {
 
     }
 
-    start() {
+    start(ctx) {
         // let brick = new Brick(this, { x: 20, y: 20});
 
         if (this.gamestate !== GAMESTATE.MENU && this.gamestate !== GAMESTATE.NEWLEVEL) return;
 
-        this.bricks = buildlevel(this, this.levels[this.currentLevel]);
+        this.bricks = buildlevel(this, this.levels[this.currentLevel],ctx);
         
         this.ball.reset();
 
@@ -81,7 +81,7 @@ class Game {
         this.paddle.draw(ctx);
         this.ball.draw(ctx);
         // this.brick.draw(ctx);        
-        buildlevel(this, this.levels[0]);
+        console.log(buildlevel(this, this.levels[0],ctx));
         [...this.gameObjects, ...this.bricks].forEach((object) => object.update(ctx));
 
         if (this.gamestate === GAMESTATE.PAUSED) {
