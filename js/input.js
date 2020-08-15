@@ -1,5 +1,3 @@
-
-
 class InputHandler {
     constructor(paddle, game) {
         document.addEventListener("keydown", event => {

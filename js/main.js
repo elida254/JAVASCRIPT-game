@@ -11,9 +11,12 @@ const GAME_HEIGHT = 600;
 let game = new Game(GAME_WIDTH, GAME_HEIGHT)
 
 
-game.start(ctx)
+game.start()
 
-
+document.getElementById('clickbutton').onclick= function startOver() {
+    game.randomStart();
+    requestAnimationFrame(gameloop);
+}
 let lastTime = 0;
 
 function gameloop(timestamp) {

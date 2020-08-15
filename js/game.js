@@ -2,7 +2,6 @@ var Paddle = require("./paddle.js");
 var InputHandler = require("./input");
 var Ball = require("./ball");
 var AllLevels = require('./levels');
-const Brick = require("./brick");
 
 var buildlevel = AllLevels.buildlevel;
 var level1 = AllLevels.level1;
@@ -34,23 +33,23 @@ class Game {
         this.bricks = [];
 
         this.lives = 3;
-        this.ctx = null;
 
         this.levels = [level1, level2];
 
         this.currentLevel = 0;
+        this.level = 1;
 
         new InputHandler(this.paddle, this);
 
     }
 
-    start(ctx) {
+    start() {
         // let brick = new Brick(this, { x: 20, y: 20});
 
         if (this.gamestate !== GAMESTATE.MENU && this.gamestate !== GAMESTATE.NEWLEVEL) return;
 
-        this.bricks = buildlevel(this, this.levels[this.currentLevel],ctx);
-        
+        this.bricks = buildlevel(this, this.levels[this.currentLevel]);
+
         this.ball.reset();
 
         this.gameObjects = [this.ball, this.paddle];
@@ -59,10 +58,17 @@ class Game {
     }
 
     update(deltaTime) {
+        document.getElementById('lives').innerText= this.lives;
+
+        document.getElementById('level').innerHTML= 'LEVEL '+ this.level;
+
+
         if (this.lives == 0) this.gamestate = GAMESTATE.GAMEOVER;
+
         if (this.gamestate == GAMESTATE.PAUSED || this.gamestate == GAMESTATE.MENU || this.gamestate == GAMESTATE.GAMEOVER) return;
 
         if (this.bricks.length === 0) {
+            this.level++
             this.currentLevel++;
 
             this.gamestate = GAMESTATE.NEWLEVEL;
@@ -76,13 +82,13 @@ class Game {
 
     }
 
+    randomStart() {
+        this.gamestate = GAMESTATE.MENU;
+    }
+
     draw(ctx) {
-        // console.log(ctx);
-        this.paddle.draw(ctx);
-        this.ball.draw(ctx);
-        // this.brick.draw(ctx);        
-        console.log(buildlevel(this, this.levels[0],ctx));
-        [...this.gameObjects, ...this.bricks].forEach((object) => object.update(ctx));
+        // console.log(this.gameObjects);
+        [...this.gameObjects, ...this.bricks].forEach((object) => object.draw(ctx));
 
         if (this.gamestate === GAMESTATE.PAUSED) {
             ctx.rect(0, 0, this.gamewidth, this.gameheight);

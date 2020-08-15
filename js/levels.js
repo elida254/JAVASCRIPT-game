@@ -1,4 +1,4 @@
-var Brick = require("./brick");
+const Brick = require("./brick");
 
 const level1 = [
     [0, 1, 1, 0, 0, 0, 0, 1, 1, 0],
@@ -18,8 +18,8 @@ const level2 = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 ];
 
-function buildlevel(game, level, ctx) {
-    let bricks = [];
+function buildlevel(game, level) {
+    let bricks =[];
     level.forEach((row, rowIndex) => {
         row.forEach((brick, brickIndex) => {
             if (brick === 1) {
@@ -27,7 +27,7 @@ function buildlevel(game, level, ctx) {
                     x: 80 * brickIndex,
                     y: 75 + 24 * rowIndex
                 }
-                bricks.push(new Brick(game, position).draw(ctx));
+                bricks.push(new Brick(game, position));
             }
         })
     });

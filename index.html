@@ -4,7 +4,9 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>parcel javascript</title>
+    <title>PADDLE GAME</title>
+    <link rel="shortcut icon" href="photos/ball.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="main.css">
 
@@ -18,12 +20,22 @@
 
     <canvas id="gameScreen" width="900" height="600"></canvas>
     <section>
-        <div class="h1">best score</div>
-        <div class="h2">34 points</div>
-        <h1>your score</h1>
-        <p>22 points</p>
-        <div class="p">you have <span>3</span> lives left</div>
-        <button>start over</button>
+        <div class="best-score">
+            <h1><i class="fa fa-trophy" aria-hidden="true"></i> best score : </h1>
+            <span>34 points</span>
+        </div>
+        <div class="your-score">
+            <h1><i class="fa fa-crop" aria-hidden="true"></i> your score : </h1>
+            <span>22 points</span>
+        </div> 
+        <div class="level">
+            <h1><i class="fa fa-level-up" aria-hidden="true"></i> your level : </h1>
+            <span id="level"></span>
+        </div>
+        <br>
+        <div class="p">you have <i class="fa fa-life-ring" aria-hidden="true"></i> <strong id="lives"></strong> lives left</div>
+        <br>
+        <button id="clickbutton">refresh the game</button>
     </section>
     <script src="/main.js" type="module"></script>
 

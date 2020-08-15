@@ -126,7 +126,6 @@ var Paddle = require("./paddle.js");
 var InputHandler = require("./input");
 var Ball = require("./ball");
 var AllLevels = require('./levels');
-const Brick = require("./brick");
 
 var buildlevel = AllLevels.buildlevel;
 var level1 = AllLevels.level1;
@@ -158,23 +157,23 @@ class Game {
         this.bricks = [];
 
         this.lives = 3;
-        this.ctx = null;
 
         this.levels = [level1, level2];
 
         this.currentLevel = 0;
+        this.level = 1;
 
         new InputHandler(this.paddle, this);
 
     }
 
-    start(ctx) {
+    start() {
         // let brick = new Brick(this, { x: 20, y: 20});
 
         if (this.gamestate !== GAMESTATE.MENU && this.gamestate !== GAMESTATE.NEWLEVEL) return;
 
-        this.bricks = buildlevel(this, this.levels[this.currentLevel],ctx);
-        
+        this.bricks = buildlevel(this, this.levels[this.currentLevel]);
+
         this.ball.reset();
 
         this.gameObjects = [this.ball, this.paddle];
@@ -183,10 +182,17 @@ class Game {
     }
 
     update(deltaTime) {
+        document.getElementById('lives').innerText= this.lives;
+
+        document.getElementById('level').innerHTML= 'LEVEL '+ this.level;
+
+
         if (this.lives == 0) this.gamestate = GAMESTATE.GAMEOVER;
+
         if (this.gamestate == GAMESTATE.PAUSED || this.gamestate == GAMESTATE.MENU || this.gamestate == GAMESTATE.GAMEOVER) return;
 
         if (this.bricks.length === 0) {
+            this.level++
             this.currentLevel++;
 
             this.gamestate = GAMESTATE.NEWLEVEL;
@@ -200,13 +206,13 @@ class Game {
 
     }
 
+    randomStart() {
+        this.gamestate = GAMESTATE.MENU;
+    }
+
     draw(ctx) {
-        // console.log(ctx);
-        this.paddle.draw(ctx);
-        this.ball.draw(ctx);
-        // this.brick.draw(ctx);        
-        console.log(buildlevel(this, this.levels[0],ctx));
-        [...this.gameObjects, ...this.bricks].forEach((object) => object.update(ctx));
+        // console.log(this.gameObjects);
+        [...this.gameObjects, ...this.bricks].forEach((object) => object.draw(ctx));
 
         if (this.gamestate === GAMESTATE.PAUSED) {
             ctx.rect(0, 0, this.gamewidth, this.gameheight);
@@ -268,9 +274,7 @@ class Game {
 };
 
 module.exports = Game
-},{"./ball":1,"./brick":2,"./input":5,"./levels":6,"./paddle.js":8}],5:[function(require,module,exports){
-
-
+},{"./ball":1,"./input":5,"./levels":6,"./paddle.js":8}],5:[function(require,module,exports){
 class InputHandler {
     constructor(paddle, game) {
         document.addEventListener("keydown", event => {
@@ -323,7 +327,7 @@ class InputHandler {
 }
 module.exports = InputHandler;
 },{}],6:[function(require,module,exports){
-var Brick = require("./brick");
+const Brick = require("./brick");
 
 const level1 = [
     [0, 1, 1, 0, 0, 0, 0, 1, 1, 0],
@@ -343,8 +347,8 @@ const level2 = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 ];
 
-function buildlevel(game, level, ctx) {
-    let bricks = [];
+function buildlevel(game, level) {
+    let bricks =[];
     level.forEach((row, rowIndex) => {
         row.forEach((brick, brickIndex) => {
             if (brick === 1) {
@@ -352,7 +356,7 @@ function buildlevel(game, level, ctx) {
                     x: 80 * brickIndex,
                     y: 75 + 24 * rowIndex
                 }
-                bricks.push(new Brick(game, position).draw(ctx));
+                bricks.push(new Brick(game, position));
             }
         })
     });
@@ -378,9 +382,12 @@ const GAME_HEIGHT = 600;
 let game = new Game(GAME_WIDTH, GAME_HEIGHT)
 
 
-game.start(ctx)
+game.start()
 
-
+document.getElementById('clickbutton').onclick= function startOver() {
+    game.randomStart();
+    requestAnimationFrame(gameloop);
+}
 let lastTime = 0;
 
 function gameloop(timestamp) {
